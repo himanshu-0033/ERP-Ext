@@ -1,0 +1,32 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><title>Synthetic ERP login</title>
+<body><form id="loginForm">
+  <label>User ID<input id="user_id" type="password"></label>
+  <label>Password<input id="password" type="password"></label>
+  <label id="question" for="answer">Security Question</label>
+  <input id="answer" type="password" readonly>
+  <button id="getotp" type="button" disabled>Get OTP</button>
+  <input id="email_otp1" type="password" readonly>
+  <button id="loginFormSubmitButton" type="button">Log In</button>
+</form>
+<script>
+  // Synthetic behavior only: this fixture performs no network requests.
+  const params = new URLSearchParams(location.search);
+  window.otpRequests = 0;
+  window.loginRequests = 0;
+  document.querySelector('#user_id').addEventListener('blur', () => {
+    if (params.has('timeout')) return;
+    setTimeout(() => {
+      document.querySelector('#question').textContent = params.get('question') || 'Which demo color?';
+      document.querySelector('#answer').readOnly = false;
+    }, Number(params.get('delay') || 100));
+  });
+  document.querySelector('#answer').addEventListener('input', () => {
+    document.querySelector('#getotp').disabled = !document.querySelector('#answer').value.trim();
+  });
+  document.querySelector('#getotp').addEventListener('click', () => {
+    window.otpRequests++;
+    document.querySelector('#getotp').disabled = true;
+    document.querySelector('#email_otp1').readOnly = false;
+  });
+  document.querySelector('#loginFormSubmitButton').addEventListener('click', () => window.loginRequests++);
+</script></body></html>

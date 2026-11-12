@@ -1,0 +1,17 @@
+# Never commit personal profiles, local vault exports, cookies or credentials.
+profile.js
+profile.json
+*.private.*
+*.secrets.*
+.env
+.env.*
+*.pem
+*.key
+*cookies*
+vault.json
+node_modules/
+test-results/
+playwright-report/
+*.zip
+.DS_Store
+Thumbs.db

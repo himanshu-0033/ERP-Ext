@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>ERP Autofill · Your profile</title><link rel="stylesheet" href="styles.css"></head>
+<body><main>
+  <span class="eyebrow">IIT KHARAGPUR · ERP AUTOFILL</span>
+  <h1>Your private login profile</h1>
+  <p class="muted">Set up once. Unlock when you need it. Your details stay in this browser.</p>
+  <div id="notice" class="badge">Loading profile…</div>
+  <form id="profile-form" autocomplete="off">
+    <section>
+      <h2>ERP account</h2>
+      <p class="hint">Use your own account details. Nothing is pre-filled in the shared extension.</p>
+      <label for="user-id">User ID / roll number</label><input id="user-id" required maxlength="100" spellcheck="false" autocomplete="off">
+      <label for="erp-password">ERP password</label><input id="erp-password" type="password" required maxlength="256" autocomplete="off">
+    </section>
+    <section>
+      <h2>Security questions</h2>
+      <p class="hint">Copy each question exactly as ERP shows it and enter your answer. Capitalization, spaces and punctuation in questions are ignored; answer spelling and case are preserved.</p>
+      <div id="questions"></div>
+      <button id="add-question" type="button">+ Add another question</button>
+    </section>
+    <section>
+      <h2>Protect your profile</h2>
+      <p class="hint">Choose a separate vault passphrase of at least 12 characters. You will enter it to unlock the extension after restarting Chrome. It cannot be recovered if forgotten.</p>
+      <label for="vault-passphrase">Vault passphrase</label><input id="vault-passphrase" type="password" required minlength="12" maxlength="1024" autocomplete="new-password">
+      <label for="confirm-passphrase">Confirm vault passphrase</label><input id="confirm-passphrase" type="password" required minlength="12" maxlength="1024" autocomplete="new-password">
+      <label class="check"><input id="auto-fill" type="checkbox" checked>Automatically fill login details while the vault is unlocked</label>
+      <div class="row"><button type="submit" class="primary">Save encrypted profile</button><button id="clear-form" type="button">Clear form</button></div>
+    </section>
+  </form>
+  <section>
+    <h2>Remove saved data</h2>
+    <p class="hint">Delete the encrypted profile and its unlocked session. If you forget the vault passphrase, delete it here and set up your details again.</p>
+    <button id="delete-profile" class="danger" type="button">Delete saved profile</button>
+  </section>
+  <p id="status" role="status" aria-live="polite"></p>
+  <p class="footer">No account data is sent to GitHub or an extension server. Filled fields are accessible to ERP as usual. Locking does not erase fields already filled on an open page; close those tabs when finished.</p>
+  <script src="options.js"></script>
+</main></body>
+</html>

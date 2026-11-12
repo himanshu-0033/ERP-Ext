@@ -1,0 +1,13 @@
+{
+  "name": "iitkgp-erp-autofill",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Encrypted local login autofill for IIT Kharagpur ERP",
+  "license": "MIT",
+  "scripts": {
+    "test": "node --test tests/vault.test.cjs",
+    "test:browser": "node tests/browser.cjs"
+  },
+  "devDependencies": { "playwright": "1.62.1" },
+  "engines": { "node": ">=22" }
+}

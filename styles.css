@@ -1,0 +1,30 @@
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; color: #18304d; background: #f4f7fc; font: 14px/1.6 system-ui, sans-serif; }
+body.popup { width: 330px; padding: 24px; }
+.eyebrow { color: #365f9c; font-size: 10px; font-weight: 800; letter-spacing: 1.7px; }
+h1 { font-size: 28px; letter-spacing: -.8px; margin: 7px 0 0; }
+h2 { font-size: 18px; margin: 0 0 6px; }
+p { margin: 6px 0 18px; }
+.muted, .hint { color: #5e6f85; }
+.hint { font-size: 12px; }
+.badge { background: #e5edfc; color: #264f91; border-radius: 8px; padding: 10px 12px; margin: 16px 0; font-size: 12px; }
+button { padding: 11px 15px; border: 1px solid #cbd6e6; border-radius: 8px; background: white; color: #244f93; font: 600 13px system-ui, sans-serif; cursor: pointer; }
+.popup button { width: 100%; margin: 0 0 8px; }
+button.primary { background: #2459c5; border-color: #2459c5; color: white; }
+button.link { background: transparent; border: 0; }
+button.danger { color: #a52937; }
+button:disabled { opacity: .55; cursor: wait; }
+button:focus-visible, input:focus-visible { outline: 3px solid #87b9ff; outline-offset: 2px; }
+input:not([type=checkbox]) { display: block; width: 100%; font: inherit; color: #18304d; padding: 10px 12px; border: 1px solid #bfcde0; border-radius: 7px; background: white; margin: 5px 0 15px; }
+label { display: block; font-weight: 600; font-size: 13px; }
+#status { border-top: 1px solid #dbe3ef; padding-top: 14px; margin: 14px 0 0; color: #4e627e; font-size: 12px; overflow-wrap: anywhere; }
+main { max-width: 740px; margin: 40px auto; padding: 0 22px 40px; }
+section { border: 1px solid #dbe3ef; border-radius: 14px; padding: 24px; background: white; margin: 20px 0; }
+fieldset { padding: 16px; margin: 12px 0; border: 1px solid #dbe3ef; border-radius: 9px; }
+legend { font-weight: 600; padding: 0 6px; }
+.row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+.check { font-weight: 400; margin-bottom: 18px; }
+.check input { margin-right: 8px; }
+.footer { font-size: 12px; color: #5e6f85; }
+@media (max-width: 520px) { main { margin-top: 20px; padding: 0 14px 24px; } section { padding: 18px; } }
