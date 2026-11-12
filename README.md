@@ -1,123 +1,157 @@
-# IIT KGP ERP Autofill
+# IIT Kharagpur ERP Autofill
 
-A Chrome extension for the IIT Kharagpur ERP login page. Fill your user ID, password and the answer to the displayed security question, then request an OTP with one click.
+**Fill your ERP login details. Request an OTP. Log in.**
 
-**Bring your own account.** The shared extension contains no real user IDs, passwords, personal questions or answers. Enter your details through the settings page; no code editing or build tools are needed.
+![Chrome 114+](https://img.shields.io/badge/Chrome-114%2B-2563eb?style=flat-square)
+![Manifest V3](https://img.shields.io/badge/Extension-Manifest_V3-475569?style=flat-square)
+![Encrypted local storage](https://img.shields.io/badge/Storage-Encrypted_%26_Local-0f766e?style=flat-square)
+[![MIT License](https://img.shields.io/badge/License-MIT-64748b?style=flat-square)](LICENSE)
 
-## Features
+A Chrome extension for the [IIT Kharagpur ERP portal](https://erp.iitkgp.ac.in/IIT_ERP3/). Save your own login details once, unlock your profile when needed, and let the extension fill the form.
 
-- Automatic login filling while your vault is unlocked, with an option to turn it off.
-- **Fill & Send OTP** in the ERP form and the extension popup.
-- Custom security questions and answers for each user's account.
-- An encrypted local profile protected by a separate vault passphrase.
-- Manual vault locking, profile editing and deletion.
-- OTP entry and final login remain under your control.
+[Install](#installation) · [Set up](#first-time-setup) · [Use](#how-to-use) · [Privacy](#privacy) · [Help](#help)
 
-## Install in Chrome
+---
 
-1. On [this repository](https://github.com/himanshu-0033/ERP-Ext), click **Code → Download ZIP**.
-2. Extract the ZIP into a permanent folder on your computer.
-3. Open `chrome://extensions` in Chrome.
-4. Turn on **Developer mode** in the top-right corner.
-5. Click **Load unpacked** and select the extracted folder containing `manifest.json`.
-6. Open Chrome's Extensions menu (the puzzle icon) and pin **IIT KGP ERP Autofill**.
+## What it does
 
-Alternatively, download with Git:
+- Fills your user ID, password and the answer to the displayed security question.
+- Adds a **Fill & Send OTP** button to the login form and extension popup.
+- Keeps your saved profile encrypted in your browser.
+- Lets you edit, lock or delete your profile at any time.
+
+**Anyone can use it with their own ERP account.** The download contains no personal login details. No coding or build tools are needed to install it.
+
+## Installation
+
+1. [Download the ZIP](https://github.com/himanshu-0033/ERP-Ext/archive/refs/heads/main.zip) and extract it into a permanent folder.
+2. Open `chrome://extensions` in Chrome.
+3. Turn on **Developer mode**, then click **Load unpacked**.
+4. Select the extracted folder containing `manifest.json`.
+5. Pin **IIT KGP ERP Autofill** from Chrome's Extensions menu for easy access.
+
+Requires **Chrome 114 or newer**. Keep the installation folder in place.
+
+## First-time setup
+
+1. Click the extension icon and select **Set up / edit profile**.
+2. Enter your ERP user ID / roll number and password.
+3. Add each security question and its correct answer. Use **Add another question** for additional questions.
+4. Choose a separate **vault passphrase** of at least 12 characters and confirm it.
+5. Click **Save encrypted profile**.
+
+The vault passphrase unlocks your saved profile; it is separate from your ERP password. Keep it safe—if you forget it, you will need to delete the profile and set it up again.
+
+Copy questions as ERP displays them. Question matching ignores capitalization, spaces and punctuation; answers keep the spelling and case you enter.
+
+## How to use
+
+1. Open the [ERP login page](https://erp.iitkgp.ac.in/IIT_ERP3/).
+2. If your vault is locked, unlock it from the extension popup, then refresh ERP.
+3. Your details fill automatically. Click **Fill & Send OTP** when ready.
+4. Enter the received OTP yourself and click ERP's **Log In** button.
+
+Prefer manual filling? Turn off automatic filling in settings and use **Fill details only** from the popup.
+
+**OTP requests happen only when you click.** The extension does not read your inbox or enter the OTP for you. ERP's resend limits still apply.
+
+---
+
+## Privacy
+
+| Your data | How it is handled |
+| --- | --- |
+| Login details and security answers | Saved together in an encrypted local profile |
+| Vault passphrase | Used to unlock the profile; never saved by the extension |
+| Unlocked profile | Kept in memory for the browser session |
+| GitHub repository | Contains application code and synthetic tests, not your profile |
+
+There is **no analytics, cloud sync or extension server**. Your details are filled into the official ERP page, where ERP handles login and OTP requests.
+
+Use **Lock vault** when finished, especially if Chrome stays running in the background. Locking does not clear fields already filled on an ERP page; close those tabs to remove the displayed details.
+
+<details>
+<summary><strong>Encryption and permissions</strong></summary>
+
+The vault uses AES-256-GCM and PBKDF2-HMAC-SHA-256 with 600,000 iterations, a random salt and a fresh random IV. Encrypted data is saved in `chrome.storage.local`; the unlocked profile stays in `chrome.storage.session`.
+
+Storage access is restricted to trusted extension contexts. The background worker shares the unlocked profile only with this extension's settings page or its content script on an approved, top-level HTTPS ERP login page.
+
+The only API permission requested is **storage**. Content scripts are limited to the official login and portal entry URLs and require the recognized login form. There are no broad browsing-history, cookies, email, clipboard or all-sites permissions.
+
+Encryption protects the saved vault while locked. It cannot protect against malware or someone controlling your browser. Once details are filled, ERP can read them as with manual entry. A full browser exit, extension reload, disable or update clears the unlocked session.
+
+</details>
+
+## Help
+
+| Problem | Try this |
+| --- | --- |
+| Nothing fills | Unlock the vault, check the automatic-fill setting and refresh ERP. |
+| The security question does not load | Check your connection and retry. |
+| A question has no saved answer | Add that exact question and its answer in settings. |
+| OTP fails or cannot be resent | Read ERP's response, check your details and wait for its resend timer. |
+| Forgotten vault passphrase | Delete the saved profile from settings and set it up again. |
+
+<details>
+<summary><strong>Edit, lock, delete or update</strong></summary>
+
+- **Edit:** unlock the vault, open settings, change your details and enter a vault passphrase to save. You can choose a new passphrase here.
+- **Lock:** click **Lock vault** in the popup.
+- **Delete:** select **Delete saved profile** in settings. This removes the saved vault and unlocked session, but not details already filled on open ERP pages.
+- **Update:** replace the files in the same installation folder, click **Reload** at `chrome://extensions`, then unlock and refresh ERP. A different folder may create a separate installation that needs setup again.
+- **Upgrade from an older personal version:** remove its plaintext `profile.js` file and enter your details through settings. Never upload old personal profile files to GitHub.
+
+</details>
+
+---
+
+## For developers
+
+<details>
+<summary><strong>Project structure</strong></summary>
+
+```text
+ERP-Ext/
+├── manifest.json       Extension configuration
+├── background.js       Vault storage and access checks
+├── vault.js            Encryption and profile validation
+├── content.js          Login form and OTP integration
+├── popup.html / .js     Unlock, lock and quick actions
+├── options.html / .js   Profile setup and editing
+├── styles.css          Popup and settings styles
+├── tests/              Synthetic, offline tests
+├── package.json        Development dependencies and test commands
+├── LICENSE             MIT license
+└── README.md           Setup and usage guide
+```
+
+</details>
+
+<details>
+<summary><strong>Run tests and contribute</strong></summary>
+
+The extension has no runtime dependencies or build step. Tests require **Node.js 22+** and Playwright.
 
 ```sh
 git clone https://github.com/himanshu-0033/ERP-Ext.git
-```
-
-Requires Chrome 114 or newer. Keep the extracted folder in place while the extension is installed.
-
-## Set up your profile
-
-1. Click the extension icon, then **Set up / edit profile**.
-2. Enter your own ERP user ID / roll number and ERP password.
-3. Enter a security question exactly as ERP displays it and the correct answer. Use **Add another question** for each additional question your account may receive.
-4. Choose a **separate vault passphrase** of at least 12 characters and confirm it. Store it somewhere safe: there is no passphrase recovery service.
-5. Leave automatic filling enabled, or turn it off if you prefer to fill only on demand.
-6. Click **Save encrypted profile**. The vault is now unlocked for this browser session.
-
-Question matching ignores capitalization, spaces and punctuation. Different words still count as different questions. Answers retain the spelling and case you enter. Add every question your account may show; an unknown question is never guessed.
-
-## Use on ERP
-
-1. Open the [official ERP portal](https://erp.iitkgp.ac.in/IIT_ERP3/).
-2. If the vault is locked, open the extension popup and enter your vault passphrase. Refresh the ERP login page afterward, or use **Fill details only**.
-3. The extension fills the user ID and password, waits for ERP to load the security question, then fills its saved answer.
-4. Click **Fill & Send OTP** in the form or popup. This clicks ERP's own **Get OTP** button once.
-5. Check ERP's response, enter the received OTP yourself, then click ERP's **Log In** button.
-
-An OTP is never requested merely by opening a page. The extension does not read your email, collect OTPs or bypass two-factor authentication. ERP's resend limits still apply.
-
-## Privacy and security
-
-| Data | Where it lives |
-| --- | --- |
-| User ID, password, questions and answers | Together inside an encrypted vault in this extension's `chrome.storage.local` |
-| Vault passphrase | Used to encrypt/unlock; not saved by the extension |
-| Unlocked profile | `chrome.storage.session`, in memory for the browser session |
-| Repository / ZIP | Application code and synthetic tests only; no account profile |
-
-The vault uses the browser's Web Crypto API: AES-256-GCM with a fresh random IV and PBKDF2-HMAC-SHA-256 with a random salt and 600,000 iterations. Local and session storage access is restricted to trusted extension contexts. The background worker releases an unlocked profile only to this extension's settings page or its content script on an approved, top-level HTTPS ERP login page.
-
-There is no analytics, extension backend, cloud sync, external JavaScript or credential export feature. The extension fills ERP's form; ERP handles its own security-question, OTP and login requests.
-
-Encryption protects the saved vault while locked; this is not a guarantee against malware or someone controlling your browser. While unlocked, the profile is available to the extension. After filling, the ERP page can read the entered values as with manual entry. **Locking or deleting a vault does not erase fields already filled on open ERP pages.** Close those pages when finished. A full browser exit, extension reload, disable or update clears the unlocked session. If Chrome continues running in the background, use **Lock vault** explicitly.
-
-### Permissions
-
-- **storage**: saves the encrypted vault and keeps the unlocked profile in session memory.
-- Static content scripts: run only on the official ERP login URL and portal entry URL, and require the recognized login form before doing anything.
-
-No broad browsing-history, cookies, email, clipboard or all-sites permissions are requested.
-
-## Edit, lock, delete or update
-
-- **Edit:** unlock the vault, open settings, change your details and enter a vault passphrase to save. You can choose a new passphrase during this save.
-- **Lock:** click **Lock vault** in the popup.
-- **Delete / forgotten passphrase:** open settings and click **Delete saved profile**, then set up your details again. Deletion cannot recover the old profile.
-- **Update:** replace the extension files in the same installation folder, click **Reload** on `chrome://extensions`, unlock again and refresh ERP. Loading from a different folder may create a separate extension installation and require setup again.
-- **Upgrade from an older personal version:** remove its plaintext `profile.js` file and use settings to enter your details. Do not upload old personal folders or profile files to GitHub.
-
-## Troubleshooting
-
-| Problem | What to do |
-| --- | --- |
-| Nothing fills | Unlock the vault; check the automatic-fill setting; refresh ERP after installing/reloading. |
-| Security question does not load | Check the connection and retry. ERP must return the question before an answer can be filled. |
-| No saved answer for this question | Add the exact displayed question and its answer in settings. |
-| OTP request is refused or fails | Read ERP's own response, verify your account details and wait for its resend timer. |
-| Extension says to open the login page | Open the official portal and refresh the login tab. Other ERP pages are intentionally unsupported. |
-| Forgot vault passphrase | Delete the vault from settings and set it up again. |
-
-## Development and tests
-
-The extension itself has no runtime dependencies or build step. Node.js 22+ is needed only for tests; Playwright is a development dependency for browser integration tests.
-
-```sh
+cd ERP-Ext
 npm install
 npm test
 npx playwright install chromium
 npm run test:browser
 ```
 
-Browser tests load the actual unpacked extension in an isolated Chromium profile and use a synthetic ERP form with mocked question/OTP behavior. They never log into a real account or request a real OTP. Unit tests cover encryption, tamper rejection and input validation. Automated tests cannot verify live ERP acceptance or OTP delivery.
+Unit tests cover encryption, tamper rejection and input validation. Browser tests load the unpacked extension against a synthetic ERP form; they never log into a real account or send a real OTP. Live ERP acceptance and OTP delivery are not covered.
 
-```text
-manifest.json       Extension configuration and narrow page matches
-background.js       Sender checks, vault storage and session handling
-vault.js            Encryption and profile validation
-content.js          ERP form integration and OTP button
-popup.*             Unlock, lock and quick actions
-options.*           Profile setup, editing and deletion
-styles.css          Popup and settings styles
-tests/              Synthetic, offline tests
-```
+To contribute, fork the repository, make your changes on a new branch, run the relevant tests and open a pull request.
 
-Contributions and bug reports are welcome. Never include your password, security answers, vault, session tokens or screenshots showing personal details in an issue or pull request. The maintainers will never need those details to debug the extension.
+For bug reports, describe what happened and what you expected. **Never include passwords, security answers, vault data, session tokens or screenshots showing personal details.**
 
-## License and affiliation
+</details>
 
-MIT licensed. An independent community tool, not an official IIT Kharagpur product. The installation guide takes inspiration from the community's [ERP Feedback Automator](https://github.com/change-kgp/erp-feedback-automator); this extension serves the separate login workflow.
+## License
+
+Released under the [MIT License](LICENSE). An independent community tool, not an official IIT Kharagpur product.
+
+Installation-guide inspiration: [ERP Feedback Automator](https://github.com/change-kgp/erp-feedback-automator).
